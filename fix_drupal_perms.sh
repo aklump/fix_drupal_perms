@@ -2,7 +2,7 @@
 
 #
 # @file
-# Fix the permissions for a drupal installation
+# Fix the permissions for a Drupal installation
 #
 
 ##
@@ -19,13 +19,13 @@ function confirm() {
   fi
 }
 
-if [ ! -d public_html ] && [ ! -d sites ]
+if [ ! -d public_html/sites ] && [ ! -d sites ]
 then
-  echo "This doesn't appear to be a drupal install; ABORT!"
+  echo "This doesn't appear to be a Drupal install; ABORT!"
   exit
 fi
 
-confirm 'Fix file permissions on this drupal install?'
+confirm 'Fix file permissions on this Drupal install?'
 
 if [ -d public_html ]
 then
