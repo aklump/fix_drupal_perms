@@ -27,6 +27,15 @@ fi
 
 confirm 'Fix file permissions on this Drupal install?'
 
+if [[ -f install.php ]]; then
+  echo "`tput setaf 3`install.php found, delete it? (y/n)`tput op`"
+  read -n 1 a
+  if [ "$a" == 'y' ]
+  then
+    rm install.php
+  fi
+fi
+
 if [ -d public_html ]
 then
   start_dir=${PWD}
@@ -60,13 +69,10 @@ then
 fi
 
 echo 'Removing .txt files from root:'
-declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'INSTALL.mysql.txt' 'INSTALL.pgsql.txt' 'INSTALL.sqlite.txt' 'INSTALL.txt' 'LICENSE.txt' 'MAINTAINERS.txt' 'README.txt' 'UPGRADE.txt');
+declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt');
 for file in "${remove[@]}"
 do
-  if [ -f "$file" ]
-  then
-    rm -v $file
-  fi
+  rm -v $file
 done
 
 cd $start_dir
