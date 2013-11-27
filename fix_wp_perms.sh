@@ -19,9 +19,9 @@ function confirm() {
   fi
 }
 
-if [ ! -d public_html/wp-content ] && [ ! -d wp-content ]
+if [ ! -e public_html/wp-config.php ] && [ ! -e wp-config.php ]
 then
-  echo "This doesn't appear to be a WordPress install; ABORT!"
+  echo "This doesn't appear to be a WordPress install (wp-config.php not found); ABORT!"
   exit
 fi
 
@@ -38,6 +38,15 @@ echo 'Adjusting web file perms'
 find . -type d -exec chmod -v 755 {} +
 find . -type f -exec chmod -v 644 {} +
 find . -name wp-content -type d -exec chmod -v 777 {} +
+
+# Make sure that define('FS_METHOD', 'direct'); appears in wp-config.php
+found=$(grep -c "FS_METHOD" wp-config.php)
+if [[ $found -eq 0 ]]; then
+  find . -name 'wp-config*.php' -type f -exec chmod -v 744 {} +  
+  echo "Added define('FS_METHOD', 'direct'); to wp-config.php"
+  echo >> wp-config.php
+  echo "define('FS_METHOD', 'direct');" >> wp-config.php
+fi
 
 # Remove write access to certain settings files
 find . -name '.htaccess' -type f -maxdepth 1 -exec chmod -v ugo-w {} +
