@@ -20,7 +20,7 @@ function confirm() {
 
 if [ ! -d public_html/sites ] && [ ! -d sites ]
 then
-  echo "`tput setaf 1`"This doesn\'t appear to be a Drupal install; ABORT!"`tput op`"
+  echo "`tput setaf 1`This doesn\'t appear to be a Drupal install; ABORT!`tput op`"
   exit
 fi
 
