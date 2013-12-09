@@ -40,25 +40,25 @@ fi
 
 echo "`tput setaf 2`Adjusting web file perms`tput op`"
 
-find . -type d -exec chmod -v 755 {} +
-find . -type f -exec chmod -v 644 {} +
+find . -type d -exec chmod 755 {} +
+find . -type f -exec chmod 644 {} +
 
 # user files
 for i in $(find . -name files -type d); do
   path="${PWD}/${i#./}"
-  if [[ "$i" == "files" ]] || [[ "$i" == 'sites/default/files' ]] || confirm "Is $path a public files directory?"; then
+  if [[ "$i" == "files" ]] || [[ "$i" == 'sites/default/files' ]] || confirm "Does $path need 777 permissions?"; then
     chmod -R 777 $i
   fi
 done
 
 # These next two are good on prod, but cause havoc with git
-#find $dir/sites -name *. -maxdepth 1 -type d -exec chmod -v ugo-w {} +
-#find $dir/sites -name default -maxdepth 1 -type d -exec chmod -v ugo-w {} +
+#find $dir/sites -name *. -maxdepth 1 -type d -exec chmod ugo-w {} +
+#find $dir/sites -name default -maxdepth 1 -type d -exec chmod ugo-w {} +
 
 # Remove write access to certain settings files
 find . -name '.htaccess' -type f -maxdepth 1 -exec chmod -v ugo-w {} +
-find . -name '.htpasswd' -type f -exec chmod -v ugo-w {} +
-find . -name 'settings*.php' -type f -exec chmod -v 444 {} +
+find . -name '.htpasswd' -type f -exec chmod ugo-w {} +
+find . -name 'settings*.php' -type f -exec chmod 444 {} +
 
 # Include the private folder if it exists
 if [ -d ../private ]
@@ -66,7 +66,7 @@ then
   echo
   echo "`tput setaf 2`Adjusting ../private files`tput op`"
   cd ../private
-  find . -type d -exec chmod -v 755 {} +
+  find . -type d -exec chmod 755 {} +
   
   # user files
   for i in $(find . -name files -type d); do
