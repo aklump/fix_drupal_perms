@@ -40,11 +40,10 @@ find . -type d -exec chmod 755 {} +
 find . -type f -exec chmod 644 {} +
 
 #http://codex.wordpress.org/Hardening_WordPress
-chmod 777 wp-content wp-content/themes wp-content/plugins
-find wp-content/themes -type d -exec chmod 777 {} +
-find wp-content/plugins -type d -exec chmod 777 {} +
-chmod -R 777 wp-content/uploads
 chmod 777 .htaccess
+chmod 777 wp-content
+chmod -R 777 wp-content/themes
+chmod -R 777 wp-content/uploads
 
 # Make sure that define('FS_METHOD', 'direct'); appears in wp-config.php
 found=$(grep -c "FS_METHOD" wp-config.php)
