@@ -56,7 +56,7 @@ done
 #find $dir/sites -name default -maxdepth 1 -type d -exec chmod ugo-w {} +
 
 # Remove write access to certain settings files
-find . -name '.htaccess' -type f -maxdepth 1 -exec chmod -v ugo-w {} +
+find . -name '.htaccess' -type f -exec chmod -v ugo-w {} +
 find . -name '.htpasswd' -type f -exec chmod ugo-w {} +
 find . -name 'settings*.php' -type f -exec chmod 444 {} +
 
