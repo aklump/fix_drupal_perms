@@ -56,7 +56,7 @@ done
 #find $dir/sites -name default -maxdepth 1 -type d -exec chmod ugo-w {} +
 
 # Remove write access to certain settings files
-find . -name '.htaccess' -type f -exec chmod -v ugo-w {} +
+find . -name '.htaccess' -type f -exec chmod ugo-w {} +
 find . -name '.htpasswd' -type f -exec chmod ugo-w {} +
 find . -name 'settings*.php' -type f -exec chmod 444 {} +
 
@@ -71,7 +71,7 @@ then
   # user files
   for i in $(find . -name files -type d); do
     path="${PWD}/${i#./}"
-    if [[ "$i" == "files" ]] || [[ "$i" == 'sites/default/files' ]] || confirm "Is $path a public files directory?"; then
+    if [[ "$i" == "files" ]] || [[ "$i" == 'sites/default/files' ]] || confirm "Does $path need 777 permissions?"; then
       chmod -R 777 $i
     fi
   done
@@ -83,9 +83,11 @@ fi
 echo "`tput setaf 2`Removing .txt files from root:`tput op`"
 declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt');
 for file in "${remove[@]}"; do
-  if [ -f $file ]; then
-    rm -v $file
-  fi
+  for i in $(find . -name "$file"); do
+    if [ -f "$i" ]; then
+      rm -v "$i"
+    fi
+  done
 done
 
 cd $start_dir
