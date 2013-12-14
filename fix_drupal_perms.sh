@@ -83,7 +83,7 @@ fi
 echo "`tput setaf 2`Removing .txt files from root:`tput op`"
 declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt');
 for file in "${remove[@]}"; do
-  for i in $(find . -name "$file"); do
+  for i in $(find . -name "$file" -maxdepth 1); do
     if [ -f "$i" ]; then
       rm -v "$i"
     fi
