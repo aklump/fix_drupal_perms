@@ -45,9 +45,18 @@ find . -type f -exec chmod 644 {} +
 
 # user files
 for i in $(find . -name files -type d); do
+  if [[ "$i" == './modules/simpletest/files' ]]; then
+    continue
+  fi
+
   path="${PWD}/${i#./}"
+
   if [[ "$i" == "files" ]] || [[ "$i" == 'sites/default/files' ]] || confirm "Does $path need 777 permissions?"; then
     chmod -R 777 $i
+    htaccess=$path/.htaccess
+    if [[ ! -f $htaccess ]]; then
+      echo "`tput setaf 1`Missing $htaccess file per https://drupal.org/SA-CORE-2013-003`tput op`"
+    fi
   fi
 done
 
