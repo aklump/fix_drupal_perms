@@ -88,15 +88,27 @@ then
   cd ../public_html
 fi
 
+# Delete default.settings.php
+echo "`tput setaf 2`Removing default.settings.php...`tput op`"
+find . -type f -name 'default.settings.php' -exec rm -v {} +
+
 # Text files
-echo "`tput setaf 2`Removing .txt files from root:`tput op`"
-declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt');
+echo "`tput setaf 2`Removing .txt files from root...`tput op`"
+declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt')
 for file in "${remove[@]}"; do
   for i in $(find . -name "$file" -maxdepth 1); do
     if [ -f "$i" ]; then
       rm -v "$i"
     fi
   done
+done
+
+# One off text files
+declare -a remove_one_offs=('sites/all/themes/README.txt' 'sites/all/modules/README.txt')
+for file in "${remove_one_offs[@]}"; do
+  if [ -f "$file" ]; then
+    rm -v "$file"
+  fi
 done
 
 cd $start_dir
