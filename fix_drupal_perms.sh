@@ -18,8 +18,18 @@ function confirm() {
   return 0
 }
 
-if [ ! -d public_html/sites ] && [ ! -d sites ]
-then
+start_dir=${PWD}
+web_root=${PWD}
+if [ -d public_html ]; then
+  web_root="${PWD}/public_html"
+elif [ -d web ]; then
+  web_root="${PWD}/web"
+fi
+cd $web_root
+echo "`tty -s && tput setaf 3`Web root is: $web_root`tty -s && tput op`"
+
+
+if [ ! -d "$web_root/sites" ]; then
   echo "`tput setaf 1`This doesn\'t appear to be a Drupal install; ABORT!`tput op`"
   exit
 fi
@@ -28,15 +38,11 @@ if ! confirm "Fix file permissions on this Drupal install?"; then
   exit
 fi
 
-if [[ -f install.php ]] && confirm "install.php found, delete it? (y/n)"; then
+if [[ -f install.php ]] && confirm "install.php found, delete it?"; then
   rm install.php
 fi
 
-if [ -d public_html ]
-then
-  start_dir=${PWD}
-  cd public_html
-fi
+
 
 echo "`tput setaf 2`Adjusting web file perms`tput op`"
 
@@ -85,7 +91,7 @@ then
     fi
   done
 
-  cd ../public_html
+  cd "$web_root"
 fi
 
 # Delete default.settings.php
