@@ -38,11 +38,13 @@ if ! confirm "Fix file permissions on this Drupal install?"; then
   exit
 fi
 
-if [[ -f install.php ]] && confirm "install.php found, delete it?"; then
+if [ -f install.php ] && confirm "install.php found, delete it?"; then
   rm install.php
 fi
 
-
+if [ -f web.config ] && confirm "web.config found, delete it?"; then
+  rm web.config
+fi
 
 echo "`tput setaf 2`Adjusting web file perms`tput op`"
 
