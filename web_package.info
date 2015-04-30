@@ -1,4 +1,4 @@
 name = "Fix Drupal Permissions"
 description = "A BASH script to correct permissions on a Drupal installation."
-version = "0.0.16"
+version = "0.0.17"
 author = Aaron Klump <sourcecode@intheloftstudios.com>
