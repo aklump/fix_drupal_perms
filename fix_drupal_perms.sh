@@ -78,8 +78,7 @@ find . -name '.htpasswd' -type f -exec chmod ugo-w {} +
 find . -name 'settings*.php' -type f -exec chmod 444 {} +
 
 # Include the private folder if it exists
-if [ -d ../private ]
-then
+if [ -d ../private ]; then
   echo
   echo "`tput setaf 2`Adjusting ../private files`tput op`"
   cd ../private
@@ -104,7 +103,7 @@ find . -type f -name 'default.settings.php' -exec rm -v {} +
 echo "`tput setaf 2`Removing .txt files from root...`tput op`"
 declare -a remove=('CHANGELOG.txt' 'COPYRIGHT.txt' 'CONTRIBUTORS*.txt' 'INSTALL*.txt' 'LICENSE*.txt' 'MAINTAINERS*.txt' 'README*.txt' 'STATUS*.txt' 'UPGRADE.txt')
 for file in "${remove[@]}"; do
-  for i in $(find . -name "$file" -maxdepth 1); do
+  for i in $(find . -maxdepth 1 -name "$file"); do
     if [ -f "$i" ]; then
       rm -v "$i"
     fi
