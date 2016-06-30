@@ -13,7 +13,7 @@ function confirm() {
   read -n 1 a
   echo
   if [ "$a" != 'y' ]; then
-    return -1
+    return 1
   fi
   return 0
 }
