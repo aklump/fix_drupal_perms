@@ -51,6 +51,9 @@ echo "`tput setaf 2`Adjusting web file perms`tput op`"
 find . -type d -exec chmod 755 {} +
 find . -type f -exec chmod 644 {} +
 
+# make any .sh files executable by user
+find . -name *.sh -exec chmod 744 {} +
+
 # user files
 for i in $(find . -name files -type d); do
   if [[ "$i" == './modules/simpletest/files' ]]; then
